@@ -1,6 +1,6 @@
-package iks.java.ausbildung.adressverwaltung;
+package iks.java.ausbildung.adressverwaltung.ui;
 
-enum MenuOption {
+public enum MenuOption {
 	NO_OPTION(-1, "ungültige Option"), 
 	ENTER_ADDRESS(1, "Adresse eingeben"), 
 	DISPLAY_ALL_ADDRESSES(2, "alle Adressen anzeigen"), 
@@ -12,7 +12,7 @@ enum MenuOption {
 	public final int no;
 	public final String text;
 
-	MenuOption(int no, String text) {
+	private MenuOption(int no, String text) {
 		this.no = no;
 		this.text = text;
 	}
