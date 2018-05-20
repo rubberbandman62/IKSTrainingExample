@@ -12,7 +12,7 @@ public class AdressverwaltungUI {
 		System.out.println("\n\n\n");
 		System.out.println("Hauptmenü");
 		System.out.println();
-	
+
 		for (MenuOption option : MenuOption.values()) {
 			if (option.no >= 0) {
 				System.out.println("\t" + option.no + " - " + option.text);
@@ -39,9 +39,10 @@ public class AdressverwaltungUI {
 				break;
 			} catch (Exception ex) {
 				System.out.print("Bitte eine ganze Zahl eingeben: ");
+			} finally {
+				AdressverwaltungMain.scanner.nextLine();
 			}
 		}
-		AdressverwaltungMain.scanner.nextLine();
 		return result;
 	}
 
@@ -52,21 +53,23 @@ public class AdressverwaltungUI {
 				return option;
 			}
 		}
-	
+
 		return MenuOption.NO_OPTION;
 	}
 
-	public static String[] enterNewAdress() {
+	public static String[] enterNewAddress() {
 		System.out.println("Geben sie die folgenden Attribute der neuen Adresse ein");
 		String[] address = new String[Attribute.values().length];
-	
+
 		int index = 0;
 		for (Attribute attribute : Attribute.values()) {
-			System.out.print("\t" + attribute.prompt + ": ");
-			address[index] = AdressverwaltungMain.scanner.nextLine();
+			if (attribute != Attribute.ID) {
+				System.out.print("\t" + attribute.prompt + ": ");
+				address[index] = AdressverwaltungMain.scanner.nextLine();
+			}
 			index++;
 		}
-	
+
 		return address;
 	}
 
@@ -75,7 +78,7 @@ public class AdressverwaltungUI {
 			System.out.println("Die Datenbank ist voll. Es können keine weitere Adresse hinzugefügt werden");
 			return;
 		}
-		String[] address = enterNewAdress();
+		String[] address = enterNewAddress();
 		AdressverwaltungMain.storage.insertAddress(address);
 	}
 
@@ -90,22 +93,24 @@ public class AdressverwaltungUI {
 			}
 			column++;
 		}
-	
+
 	}
 
 	public static void changeAddress(String[] address) {
 		System.out.println("Ändern Sie die Attribute der alten Adresse.");
 		String[] newAddress = new String[Attribute.values().length];
-	
+
 		int index = 0;
 		for (Attribute attribute : Attribute.values()) {
-			System.out.print("\t" + attribute.prompt + "(" + address[index] + "): ");
-			String newValue = AdressverwaltungMain.scanner.nextLine();
-			if (newValue.length() > 0) {
-				newAddress[index] = newValue;
-			} else {
-				newAddress[index] = address[index];
+			String newValue = "";
+			if (attribute != Attribute.ID) {
+				System.out.print("\t" + attribute.prompt + "(" + address[index] + "): ");
+				newValue = AdressverwaltungMain.scanner.nextLine();
 			}
+			if (newValue.length() > 0)
+				newAddress[index] = newValue;
+			else 
+				newAddress[index] = address[index];
 			index++;
 		}
 		AdressverwaltungMain.storage.updateAddress(address[0], newAddress);
@@ -118,7 +123,7 @@ public class AdressverwaltungUI {
 		if ("Y".equals(yn.toUpperCase())) {
 			AdressverwaltungMain.storage.deleteAddress(address[0], address);
 		}
-		
+
 	}
 
 	public static void deleteAddress() {
