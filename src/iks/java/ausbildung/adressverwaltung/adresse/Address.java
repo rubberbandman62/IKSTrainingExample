@@ -34,6 +34,15 @@ public class Address {
 		this.city = city;
 	}
 
+	public Address(String[] address) {
+		this.id = Integer.parseInt(address[0]);
+		this.name = address[1];
+		this.street = address[2];
+		this.streetNumber = address[3];
+		this.zipCode = address[4];
+		this.city = address[5];
+	}
+	
 	public Address(Integer id, Address other) {
 		this.id = id;
 		this.name = other.name;
@@ -43,8 +52,22 @@ public class Address {
 		this.city = other.city;
 	}
 
+	public Address(Integer id , String[] address) {
+		this.id = id;
+		this.name = address[1];
+		this.street = address[2];
+		this.streetNumber = address[3];
+		this.zipCode = address[4];
+		this.city = address[5];
+	}
+	
+
 	public Address(Address other) {
 		this(other.id, other);
+	}
+	
+	public String[] toStringArray() {
+		return new String[] {"" + this.id, this.name, this.street, this.streetNumber, this.zipCode, this.city};
 	}
 
 }

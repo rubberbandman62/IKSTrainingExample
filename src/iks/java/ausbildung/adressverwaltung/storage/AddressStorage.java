@@ -4,13 +4,14 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import iks.java.ausbildung.adressverwaltung.adresse.Address;
 import iks.java.ausbildung.adressverwaltung.adresse.Address.Attribute;
 
 public class AddressStorage implements Iterable<String[]> {
 
 	public final int MAX_COLUMNS = Attribute.values().length;
 
-	private HashMap<Integer, String[]> addressMap = new HashMap<>();
+	private HashMap<Integer, Address> addressMap = new HashMap<>();
 
 	private static AddressStorage instance;
 
@@ -26,12 +27,12 @@ public class AddressStorage implements Iterable<String[]> {
 
 	@Override
 	public Iterator<String[]> iterator() {
-		return addressMap.values().iterator();
+		return addressMap.values().stream().map(adr -> adr.toStringArray()).iterator();
 	}
 
 	public String[] readAddress(int id) {
 		if (isValidID(id))
-			return addressMap.get(id);
+			return addressMap.get(id).toStringArray();
 		else
 			return new String[MAX_COLUMNS];
 	}
@@ -45,11 +46,12 @@ public class AddressStorage implements Iterable<String[]> {
 	}
 
 	public void updateAddress(String id, String[] newAddress) {
-		addressMap.put(Integer.parseInt(id), newAddress);
+		addressMap.put(Integer.parseInt(id), new Address(newAddress));
 	}
 
 	public String[] deleteAddress(String id, String[] address) {
-		return addressMap.remove(Integer.parseInt(id));
+		Address deleted = addressMap.remove(Integer.parseInt(id));
+		return deleted != null ? deleted.toStringArray() : null;
 	}
 
 	public boolean isFull() {
@@ -59,7 +61,7 @@ public class AddressStorage implements Iterable<String[]> {
 	public String[] insertAddress(String[] address) {
 		int nextIndex = addressMap.keySet().stream().max(Comparator.naturalOrder()).orElse(0) + 1;
 		address[0] = "" + nextIndex;
-		addressMap.put(nextIndex, address);
+		addressMap.put(nextIndex, new Address(nextIndex, address));
 		return address;
 		
 	}
