@@ -1,54 +1,72 @@
 package iks.java.ausbildung.adressverwaltung.ui;
 
+import java.io.PrintStream;
 import java.util.Iterator;
+import java.util.Scanner;
 
-import iks.java.ausbildung.adressverwaltung.AdressverwaltungMain;
+import iks.java.ausbildung.adressverwaltung.adresse.Address;
 import iks.java.ausbildung.adressverwaltung.adresse.Address.Attribute;
 import iks.java.ausbildung.adressverwaltung.storage.AddressStorage;
+import iks.java.ausbildung.adressverwaltung.storage.StorageInterface;
 
 public class AdressverwaltungUI {
+	
+	private Scanner scanner;
+	private StorageInterface storage;
+	private PrintStream out;
+	
+	public AdressverwaltungUI(Scanner scanner, PrintStream out, StorageInterface storage) {
+		this.scanner = scanner;
+		this.out = out;
+		this.storage = storage;
+	}
 
-	public static void printMainMenu() {
-		System.out.println("\n\n\n");
-		System.out.println("Hauptmenü");
-		System.out.println();
+	public MenuOption selectExecutionOption(MenuOption[] options) {
+		printMainMenu(options);
+		return selectMainMenuOption(options);
+	}
+	
+	private void printMainMenu(MenuOption[] options) {
+		out.println("\n\n\n");
+		out.println("Hauptmenü");
+		out.println();
 
-		for (MenuOption option : MenuOption.values()) {
+		for (MenuOption option : options) {
 			if (option.no >= 0) {
-				System.out.println("\t" + option.no + " - " + option.text);
+				out.println("\t" + option.no + " - " + option.text);
 			}
 		}
 	}
 
-	public static MenuOption selectMainMenuOption() {
-		System.out.println();
-		System.out.print("Bitte wählen Sie ein Option: ");
-		MenuOption option = AdressverwaltungUI.readMenuOption();
+	private MenuOption selectMainMenuOption(MenuOption[] options) {
+		out.println();
+		out.print("Bitte wählen Sie ein Option: ");
+		MenuOption option = readMenuOption(options);
 		while (option == MenuOption.NO_OPTION) {
-			System.out.print("Bitte wählen Sie eine gültige Menüoption: ");
-			option = AdressverwaltungUI.readMenuOption();
+			out.print("Bitte wählen Sie eine gültige Menüoption: ");
+			option = readMenuOption(options);
 		}
 		return option;
 	}
 
-	public static int readInteger() {
+	public int readInteger() {
 		int result;
 		while (true) {
 			try {
-				result = AdressverwaltungMain.scanner.nextInt();
+				result = scanner.nextInt();
 				break;
 			} catch (Exception ex) {
-				System.out.print("Bitte eine ganze Zahl eingeben: ");
+				out.print("Bitte eine ganze Zahl eingeben: ");
 			} finally {
-				AdressverwaltungMain.scanner.nextLine();
+				scanner.nextLine();
 			}
 		}
 		return result;
 	}
 
-	public static MenuOption readMenuOption() {
+	private MenuOption readMenuOption(MenuOption[] options) {
 		int no = readInteger();
-		for (MenuOption option : MenuOption.values()) {
+		for (MenuOption option : options) {
 			if (option.no == no) {
 				return option;
 			}
@@ -57,15 +75,15 @@ public class AdressverwaltungUI {
 		return MenuOption.NO_OPTION;
 	}
 
-	public static String[] enterNewAddress() {
-		System.out.println("Geben sie die folgenden Attribute der neuen Adresse ein");
+	public String[] enterNewAddress() {
+		out.println("Geben Sie die folgenden Attribute der neuen Adresse ein");
 		String[] address = new String[Attribute.values().length];
 
 		int index = 0;
 		for (Attribute attribute : Attribute.values()) {
 			if (attribute != Attribute.ID) {
-				System.out.print("\t" + attribute.prompt + ": ");
-				address[index] = AdressverwaltungMain.scanner.nextLine();
+				out.print("\t" + attribute.prompt + ": ");
+				address[index] = scanner.nextLine();
 			}
 			index++;
 		}
@@ -73,107 +91,107 @@ public class AdressverwaltungUI {
 		return address;
 	}
 
-	public static void addNewAddressToDatabase() {
-		if (AdressverwaltungMain.storage.isFull()) {
-			System.out.println("Die Datenbank ist voll. Es können keine weitere Adresse hinzugefügt werden");
+	public void addNewAddressToDatabase() {
+		if (storage.isFull()) {
+			out.println("Die Datenbank ist voll. Es können keine weitere Adresse hinzugefügt werden");
 			return;
 		}
 		String[] address = enterNewAddress();
-		AdressverwaltungMain.storage.insertAddress(address);
+		storage.insertAddress(new Address(address));
 	}
 
-	public static void printAddress(String[] address) {
+	public void printAddress(Address address) {
 		int column = 0;
 		for (Attribute attribute : Attribute.values()) {
-			System.out.print(attribute.prompt + ": " + address[column]);
+			out.print(attribute.prompt + ": " + address.toStringArray()[column]);
 			if (column < Attribute.values().length - 1) {
-				System.out.print(", ");
+				out.print(", ");
 			} else {
-				System.out.println();
+				out.println();
 			}
 			column++;
 		}
-
 	}
 
-	public static void changeAddress(String[] address) {
-		System.out.println("Ändern Sie die Attribute der alten Adresse.");
+	public void changeAddress(Address address) {
+		out.println("Ändern Sie die Attribute der alten Adresse.");
 		String[] newAddress = new String[Attribute.values().length];
+		String[] oldAddress = address.toStringArray();
 
 		int index = 0;
 		for (Attribute attribute : Attribute.values()) {
 			String newValue = "";
 			if (attribute != Attribute.ID) {
-				System.out.print("\t" + attribute.prompt + "(" + address[index] + "): ");
-				newValue = AdressverwaltungMain.scanner.nextLine();
+				out.print("\t" + attribute.prompt + "(" + oldAddress[index] + "): ");
+				newValue = scanner.nextLine();
 			}
 			if (newValue.length() > 0)
 				newAddress[index] = newValue;
 			else 
-				newAddress[index] = address[index];
+				newAddress[index] = oldAddress[index];
 			index++;
 		}
-		AdressverwaltungMain.storage.updateAddress(address[0], newAddress);
+		storage.updateAddress(address.id, new Address(newAddress));
 	}
 
-	public static void deleteAddress(String[] address) {
+	public void deleteAddress(Address address) {
 		printAddress(address);
-		System.out.print("Soll die angezeigte Addresse wirklich gelöscht werden? (Y/N) ");
-		String yn = AdressverwaltungMain.scanner.nextLine();
+		out.print("Soll die angezeigte Addresse wirklich gelöscht werden? (Y/N) ");
+		String yn = scanner.nextLine();
 		if ("Y".equals(yn.toUpperCase())) {
-			AdressverwaltungMain.storage.deleteAddress(address[0], address);
+			storage.deleteAddress(address.id);
 		}
 
 	}
 
-	public static void deleteAddress() {
-		if (AdressverwaltungMain.storage.isEmpty()) {
-			System.out.println("Es gibt noch keine Adressen die gelöscht werden könnten!");
+	public void deleteAddress() {
+		if (storage.isEmpty()) {
+			out.println("Es gibt noch keine Adressen die gelöscht werden könnten!");
 			return;
 		}
-		System.out.print("Welche Adresse soll geändert werden? ");
+		out.print("Welche Adresse soll gelöscht werden? ");
 		int id = readInteger();
-		if (!AdressverwaltungMain.storage.isValidID(id)) {
-			System.out.println("Die ID existiert nicht!");
+		if (!storage.isValidID(id)) {
+			out.println("Die ID existiert nicht!");
 			return;
 		}
-		String[] address = AdressverwaltungMain.storage.readAddress(id);
+		Address address = storage.readAddress(id);
 		deleteAddress(address);
 	}
 
-	public static void changeAddress() {
-		if (AdressverwaltungMain.storage.isEmpty()) {
-			System.out.println("Es gibt noch keine Adressen die geändert werden könnten!");
+	public void changeAddress() {
+		if (storage.isEmpty()) {
+			out.println("Es gibt noch keine Adressen die geändert werden könnten!");
 			return;
 		}
-		System.out.print("Welche Adresse soll geändert werden? ");
+		out.print("Welche Adresse soll geändert werden? ");
 		int id = readInteger();
-		if (!AdressverwaltungMain.storage.isValidID(id)) {
-			System.out.println("Die ID existiert nicht!");
+		if (!storage.isValidID(id)) {
+			out.println("Die ID existiert nicht!");
 			return;
 		}
-		String[] address = AdressverwaltungMain.storage.readAddress(id);
+		Address address = storage.readAddress(id);
 		printAddress(address);
 		changeAddress(address);
 	}
 
-	public static void printAddress() {
-		if (AdressverwaltungMain.storage.isEmpty()) {
-			System.out.println("Es gibt noch keine Adressen die ausgegeben werden könnten!");
+	public void printAddress() {
+		if (storage.isEmpty()) {
+			out.println("Es gibt noch keine Adressen die ausgegeben werden könnten!");
 			return;
 		}
-		System.out.print("Welche Adresse soll ausgegeben werden? ");
+		out.print("Welche Adresse soll ausgegeben werden? ");
 		int id = readInteger();
-		if (!AdressverwaltungMain.storage.isValidID(id)) {
-			System.out.println("Die ID existiert nicht!");
+		if (!storage.isValidID(id)) {
+			out.println("Die ID existiert nicht!");
 			return;
 		}
-		printAddress(AdressverwaltungMain.storage.readAddress(id));
+		printAddress(storage.readAddress(id));
 	}
 
-	public static void printAllAddresses() {
-		for (Iterator<String[]> iterator = AddressStorage.getInstance().iterator(); iterator.hasNext();) {
-			String[] address = (String[]) iterator.next();
+	public void printAllAddresses() {
+		for (Iterator<Address> iterator = AddressStorage.getInstance().iterator(); iterator.hasNext();) {
+			Address address = iterator.next();
 			printAddress(address);
 		}
 	}

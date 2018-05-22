@@ -5,11 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import iks.java.ausbildung.adressverwaltung.adresse.Address;
-import iks.java.ausbildung.adressverwaltung.adresse.Address.Attribute;
 
-public class AddressStorage implements Iterable<String[]> {
-
-	public final int MAX_COLUMNS = Attribute.values().length;
+public class AddressStorage implements Iterable<Address>, StorageInterface {
 
 	private HashMap<Integer, Address> addressMap = new HashMap<>();
 
@@ -25,42 +22,67 @@ public class AddressStorage implements Iterable<String[]> {
 	private AddressStorage() {
 	}
 
+	/* (non-Javadoc)
+	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#iterator()
+	 */
 	@Override
-	public Iterator<String[]> iterator() {
-		return addressMap.values().stream().map(adr -> adr.toStringArray()).iterator();
+	public Iterator<Address> iterator() {
+		return addressMap.values().stream().iterator();
 	}
 
-	public String[] readAddress(int id) {
+	/* (non-Javadoc)
+	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#readAddress(int)
+	 */
+	@Override
+	public Address readAddress(int id) {
 		if (isValidID(id))
-			return addressMap.get(id).toStringArray();
+			return addressMap.get(id);
 		else
-			return new String[MAX_COLUMNS];
+			return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#isEmpty()
+	 */
+	@Override
 	public boolean isEmpty() {
 		return addressMap.isEmpty();
 	}
 
+	/* (non-Javadoc)
+	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#isValidID(int)
+	 */
+	@Override
 	public boolean isValidID(int id) {
 		return addressMap.get(id) != null;
 	}
 
-	public void updateAddress(String id, String[] newAddress) {
-		addressMap.put(Integer.parseInt(id), new Address(newAddress));
+	/* (non-Javadoc)
+	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#updateAddress(java.lang.Integer, iks.java.ausbildung.adressverwaltung.adresse.Address)
+	 */
+	@Override
+	public void updateAddress(Integer id, Address newAddress) {
+		addressMap.put(id, new Address(id, newAddress));
 	}
 
-	public String[] deleteAddress(String id, String[] address) {
-		Address deleted = addressMap.remove(Integer.parseInt(id));
-		return deleted != null ? deleted.toStringArray() : null;
+	/* (non-Javadoc)
+	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#deleteAddress(java.lang.Integer)
+	 */
+	@Override
+	public Address deleteAddress(Integer id) {
+		return addressMap.remove(id);
 	}
 
 	public boolean isFull() {
 		return false;
 	}
 
-	public String[] insertAddress(String[] address) {
+	/* (non-Javadoc)
+	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#insertAddress(iks.java.ausbildung.adressverwaltung.adresse.Address)
+	 */
+	@Override
+	public Address insertAddress(Address address) {
 		int nextIndex = addressMap.keySet().stream().max(Comparator.naturalOrder()).orElse(0) + 1;
-		address[0] = "" + nextIndex;
 		addressMap.put(nextIndex, new Address(nextIndex, address));
 		return address;
 		

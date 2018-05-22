@@ -35,7 +35,7 @@ public class Address {
 	}
 
 	public Address(String[] address) {
-		this.id = Integer.parseInt(address[0]);
+		this.id = null;
 		this.name = address[1];
 		this.street = address[2];
 		this.streetNumber = address[3];
@@ -59,11 +59,6 @@ public class Address {
 		this.streetNumber = address[3];
 		this.zipCode = address[4];
 		this.city = address[5];
-	}
-	
-
-	public Address(Address other) {
-		this(other.id, other);
 	}
 	
 	public String[] toStringArray() {

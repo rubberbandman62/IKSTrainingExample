@@ -7,7 +7,7 @@ public enum MenuOption {
 	DISPLAY_ADDRESS(3, "Adresse anzeigen"), 
 	CHANGE_ADDRESS(4, "Adresse ändern"), 
 	DELETE_ADDRESS(5, "Adresse löschen"), 
-	PROGRAM_END(99, "Programm beenden");
+	PROGRAM_END(9, "Programm beenden");
 
 	public final int no;
 	public final String text;
