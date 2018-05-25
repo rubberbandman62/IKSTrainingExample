@@ -19,20 +19,13 @@ public class AddressStorage implements Iterable<Address>, StorageInterface {
 		return instance;
 	}
 
-	private AddressStorage() {
-	}
+	private AddressStorage() {}
 
-	/* (non-Javadoc)
-	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#iterator()
-	 */
 	@Override
 	public Iterator<Address> iterator() {
 		return addressMap.values().stream().iterator();
 	}
 
-	/* (non-Javadoc)
-	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#readAddress(int)
-	 */
 	@Override
 	public Address readAddress(int id) {
 		if (isValidID(id))
@@ -41,51 +34,40 @@ public class AddressStorage implements Iterable<Address>, StorageInterface {
 			return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#isEmpty()
-	 */
 	@Override
 	public boolean isEmpty() {
 		return addressMap.isEmpty();
 	}
 
-	/* (non-Javadoc)
-	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#isValidID(int)
-	 */
 	@Override
 	public boolean isValidID(int id) {
 		return addressMap.get(id) != null;
 	}
 
-	/* (non-Javadoc)
-	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#updateAddress(java.lang.Integer, iks.java.ausbildung.adressverwaltung.adresse.Address)
-	 */
 	@Override
-	public void updateAddress(Integer id, Address newAddress) {
-		addressMap.put(id, new Address(id, newAddress));
+	public Address updateAddress(Integer id, Address newAddress) {
+		Address address = new Address(id, newAddress);
+		addressMap.put(id, address);
+		return address;
 	}
 
-	/* (non-Javadoc)
-	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#deleteAddress(java.lang.Integer)
-	 */
 	@Override
 	public Address deleteAddress(Integer id) {
 		return addressMap.remove(id);
 	}
 
+	@Override
 	public boolean isFull() {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see iks.java.ausbildung.adressverwaltung.storage.StorageInterface#insertAddress(iks.java.ausbildung.adressverwaltung.adresse.Address)
-	 */
 	@Override
 	public Address insertAddress(Address address) {
 		int nextIndex = addressMap.keySet().stream().max(Comparator.naturalOrder()).orElse(0) + 1;
-		addressMap.put(nextIndex, new Address(nextIndex, address));
-		return address;
-		
+		Address newAddress = new Address(nextIndex, address);
+		addressMap.put(nextIndex, newAddress);
+
+		return newAddress;
 	}
 
 }

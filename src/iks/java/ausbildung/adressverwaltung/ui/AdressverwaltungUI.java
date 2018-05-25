@@ -75,20 +75,20 @@ public class AdressverwaltungUI {
 		return MenuOption.NO_OPTION;
 	}
 
-	public String[] enterNewAddress() {
+	public Address enterNewAddress() {
 		out.println("Geben Sie die folgenden Attribute der neuen Adresse ein");
-		String[] address = new String[Attribute.values().length];
+		String[] attributeArray = new String[Attribute.values().length];
 
 		int index = 0;
 		for (Attribute attribute : Attribute.values()) {
 			if (attribute != Attribute.ID) {
 				out.print("\t" + attribute.prompt + ": ");
-				address[index] = scanner.nextLine();
+				attributeArray[index] = scanner.nextLine();
 			}
 			index++;
 		}
 
-		return address;
+		return new Address(attributeArray);
 	}
 
 	public void addNewAddressToDatabase() {
@@ -96,14 +96,13 @@ public class AdressverwaltungUI {
 			out.println("Die Datenbank ist voll. Es können keine weitere Adresse hinzugefügt werden");
 			return;
 		}
-		String[] address = enterNewAddress();
-		storage.insertAddress(new Address(address));
+		storage.insertAddress(enterNewAddress());
 	}
 
 	public void printAddress(Address address) {
 		int column = 0;
 		for (Attribute attribute : Attribute.values()) {
-			out.print(attribute.prompt + ": " + address.toStringArray()[column]);
+			out.print(attribute.prompt + ": " + address.toAttributeArray()[column]);
 			if (column < Attribute.values().length - 1) {
 				out.print(", ");
 			} else {
@@ -115,23 +114,21 @@ public class AdressverwaltungUI {
 
 	public void changeAddress(Address address) {
 		out.println("Ändern Sie die Attribute der alten Adresse.");
-		String[] newAddress = new String[Attribute.values().length];
-		String[] oldAddress = address.toStringArray();
+		String[] newAttributeArray = address.toAttributeArray();
 
 		int index = 0;
 		for (Attribute attribute : Attribute.values()) {
 			String newValue = "";
 			if (attribute != Attribute.ID) {
-				out.print("\t" + attribute.prompt + "(" + oldAddress[index] + "): ");
+				out.print("\t" + attribute.prompt + "(" + newAttributeArray[index] + "): ");
 				newValue = scanner.nextLine();
 			}
 			if (newValue.length() > 0)
-				newAddress[index] = newValue;
-			else 
-				newAddress[index] = oldAddress[index];
+				newAttributeArray[index] = newValue;
 			index++;
 		}
-		storage.updateAddress(address.id, new Address(newAddress));
+		Address newAddress = new Address(newAttributeArray);
+		storage.updateAddress(address.id, newAddress);
 	}
 
 	public void deleteAddress(Address address) {

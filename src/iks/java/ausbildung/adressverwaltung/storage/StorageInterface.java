@@ -10,7 +10,7 @@ public interface StorageInterface {
 
 	Address readAddress(int id);
 
-	void updateAddress(Integer id, Address newAddress);
+	Address updateAddress(Integer id, Address newAddress);
 
 	Address deleteAddress(Integer id);
 

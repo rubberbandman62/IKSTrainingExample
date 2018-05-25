@@ -12,7 +12,7 @@ Hauptmenü
 	9 - Programm beenden
 
 Bitte wählen Sie ein Option: Geben Sie die folgenden Attribute der neuen Adresse ein
-	Name: 	Straße: 	Hausnummer: 	Postleitzahl: 	Ort: 
+	Vorname: 	Nachname: 	Straße: 	Hausnummer: 	Postleitzahl: 	Ort: 
 
 
 
@@ -26,7 +26,7 @@ Hauptmenü
 	9 - Programm beenden
 
 Bitte wählen Sie ein Option: Geben Sie die folgenden Attribute der neuen Adresse ein
-	Name: 	Straße: 	Hausnummer: 	Postleitzahl: 	Ort: 
+	Vorname: 	Nachname: 	Straße: 	Hausnummer: 	Postleitzahl: 	Ort: 
 
 
 
@@ -40,7 +40,7 @@ Hauptmenü
 	9 - Programm beenden
 
 Bitte wählen Sie ein Option: Geben Sie die folgenden Attribute der neuen Adresse ein
-	Name: 	Straße: 	Hausnummer: 	Postleitzahl: 	Ort: 
+	Vorname: 	Nachname: 	Straße: 	Hausnummer: 	Postleitzahl: 	Ort: 
 
 
 
@@ -53,23 +53,9 @@ Hauptmenü
 	5 - Adresse löschen
 	9 - Programm beenden
 
-Bitte wählen Sie ein Option: Id: 1, Name: a, Straße: a, Hausnummer: a, Postleitzahl: a, Ort: a
-Id: 2, Name: b, Straße: b, Hausnummer: b, Postleitzahl: b, Ort: b
-Id: 3, Name: c, Straße: c, Hausnummer: c, Postleitzahl: c, Ort: c
-
-
-
-
-Hauptmenü
-
-	1 - Adresse eingeben
-	2 - alle Adressen anzeigen
-	3 - Adresse anzeigen
-	4 - Adresse ändern
-	5 - Adresse löschen
-	9 - Programm beenden
-
-Bitte wählen Sie ein Option: Welche Adresse soll ausgegeben werden? Id: 2, Name: b, Straße: b, Hausnummer: b, Postleitzahl: b, Ort: b
+Bitte wählen Sie ein Option: Id: 1, Vorname: a, Nachname: a, Straße: a, Hausnummer: a, Postleitzahl: a, Ort: a
+Id: 2, Vorname: b, Nachname: b, Straße: b, Hausnummer: b, Postleitzahl: b, Ort: b
+Id: 3, Vorname: c, Nachname: c, Straße: c, Hausnummer: c, Postleitzahl: c, Ort: c
 
 
 
@@ -83,9 +69,23 @@ Hauptmenü
 	5 - Adresse löschen
 	9 - Programm beenden
 
-Bitte wählen Sie ein Option: Welche Adresse soll geändert werden? Id: 2, Name: b, Straße: b, Hausnummer: b, Postleitzahl: b, Ort: b
+Bitte wählen Sie ein Option: Welche Adresse soll ausgegeben werden? Id: 2, Vorname: b, Nachname: b, Straße: b, Hausnummer: b, Postleitzahl: b, Ort: b
+
+
+
+
+Hauptmenü
+
+	1 - Adresse eingeben
+	2 - alle Adressen anzeigen
+	3 - Adresse anzeigen
+	4 - Adresse ändern
+	5 - Adresse löschen
+	9 - Programm beenden
+
+Bitte wählen Sie ein Option: Welche Adresse soll geändert werden? Id: 2, Vorname: b, Nachname: b, Straße: b, Hausnummer: b, Postleitzahl: b, Ort: b
 Ändern Sie die Attribute der alten Adresse.
-	Name(b): 	Straße(b): 	Hausnummer(b): 	Postleitzahl(b): 	Ort(b): 
+	Vorname(b): 	Nachname(b): 	Straße(b): 	Hausnummer(b): 	Postleitzahl(b): 	Ort(b): 
 
 
 
@@ -98,9 +98,9 @@ Hauptmenü
 	5 - Adresse löschen
 	9 - Programm beenden
 
-Bitte wählen Sie ein Option: Welche Adresse soll geändert werden? Id: 1, Name: a, Straße: a, Hausnummer: a, Postleitzahl: a, Ort: a
+Bitte wählen Sie ein Option: Welche Adresse soll geändert werden? Id: 1, Vorname: a, Nachname: a, Straße: a, Hausnummer: a, Postleitzahl: a, Ort: a
 Ändern Sie die Attribute der alten Adresse.
-	Name(a): 	Straße(a): 	Hausnummer(a): 	Postleitzahl(a): 	Ort(a): 
+	Vorname(a): 	Nachname(a): 	Straße(a): 	Hausnummer(a): 	Postleitzahl(a): 	Ort(a): 
 
 
 
@@ -113,9 +113,9 @@ Hauptmenü
 	5 - Adresse löschen
 	9 - Programm beenden
 
-Bitte wählen Sie ein Option: Welche Adresse soll geändert werden? Id: 3, Name: c, Straße: c, Hausnummer: c, Postleitzahl: c, Ort: c
+Bitte wählen Sie ein Option: Welche Adresse soll geändert werden? Id: 3, Vorname: c, Nachname: c, Straße: c, Hausnummer: c, Postleitzahl: c, Ort: c
 Ändern Sie die Attribute der alten Adresse.
-	Name(c): 	Straße(c): 	Hausnummer(c): 	Postleitzahl(c): 	Ort(c): 
+	Vorname(c): 	Nachname(c): 	Straße(c): 	Hausnummer(c): 	Postleitzahl(c): 	Ort(c): 
 
 
 
@@ -128,9 +128,9 @@ Hauptmenü
 	5 - Adresse löschen
 	9 - Programm beenden
 
-Bitte wählen Sie ein Option: Id: 1, Name: x, Straße: x, Hausnummer: x, Postleitzahl: x, Ort: x
-Id: 2, Name: y, Straße: y, Hausnummer: y, Postleitzahl: y, Ort: y
-Id: 3, Name: z, Straße: z, Hausnummer: z, Postleitzahl: z, Ort: z
+Bitte wählen Sie ein Option: Id: 1, Vorname: x, Nachname: x, Straße: x, Hausnummer: x, Postleitzahl: x, Ort: x
+Id: 2, Vorname: y, Nachname: y, Straße: y, Hausnummer: y, Postleitzahl: y, Ort: y
+Id: 3, Vorname: z, Nachname: z, Straße: z, Hausnummer: z, Postleitzahl: z, Ort: z
 
 
 
@@ -144,7 +144,7 @@ Hauptmenü
 	5 - Adresse löschen
 	9 - Programm beenden
 
-Bitte wählen Sie ein Option: Welche Adresse soll gelöscht werden? Id: 2, Name: y, Straße: y, Hausnummer: y, Postleitzahl: y, Ort: y
+Bitte wählen Sie ein Option: Welche Adresse soll gelöscht werden? Id: 2, Vorname: y, Nachname: y, Straße: y, Hausnummer: y, Postleitzahl: y, Ort: y
 Soll die angezeigte Addresse wirklich gelöscht werden? (Y/N) 
 
 
@@ -158,7 +158,7 @@ Hauptmenü
 	5 - Adresse löschen
 	9 - Programm beenden
 
-Bitte wählen Sie ein Option: Welche Adresse soll gelöscht werden? Id: 1, Name: x, Straße: x, Hausnummer: x, Postleitzahl: x, Ort: x
+Bitte wählen Sie ein Option: Welche Adresse soll gelöscht werden? Id: 1, Vorname: x, Nachname: x, Straße: x, Hausnummer: x, Postleitzahl: x, Ort: x
 Soll die angezeigte Addresse wirklich gelöscht werden? (Y/N) 
 
 
@@ -172,7 +172,7 @@ Hauptmenü
 	5 - Adresse löschen
 	9 - Programm beenden
 
-Bitte wählen Sie ein Option: Welche Adresse soll gelöscht werden? Id: 3, Name: z, Straße: z, Hausnummer: z, Postleitzahl: z, Ort: z
+Bitte wählen Sie ein Option: Welche Adresse soll gelöscht werden? Id: 3, Vorname: z, Nachname: z, Straße: z, Hausnummer: z, Postleitzahl: z, Ort: z
 Soll die angezeigte Addresse wirklich gelöscht werden? (Y/N) 
 
 
